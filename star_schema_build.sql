@@ -1,5 +1,5 @@
 
--- STAR SCHEMA BUILD SCRIPT
+-- STAR SCHEMA BUILD 
 
 -- Drop in reverse dependency order 
 /*(fact_tickets references the dims, so it must go first;
