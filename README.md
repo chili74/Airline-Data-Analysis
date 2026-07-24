@@ -20,7 +20,8 @@ The headline finding is that every route is unprofitable under sourced industry 
 This only became visible after a full data-quality audit and a dimensional rebuild.
 
 ## Repository contents
-
+- Material: raw_airline_dataset 
+- Exploratory data analysis: schema_eda, date_eda, dim_eda, measures_eda, magnitude_eda
 - `sql/01_data_quality_audit.sql` — 15-point audit covering nulls, duplicates, foreign keys, and airline-domain checks.
 - `sql/02_star_schema_build.sql` — star schema build for `dim_date`, `dim_aircraft`, `dim_route`, `dim_customer`, `dim_flight`, and `fact_tickets`.
 - `sql/03_fact_flight_operations.sql` — flight-grain fact table with modeled operating cost, maintenance allocation, and profit.
@@ -34,6 +35,7 @@ The raw dataset contains 10 tables and roughly 47,000 rows:
 - aircraft
 - airports
 - bookings
+- baggage
 - customers
 - employees
 - flights
@@ -88,13 +90,6 @@ The six main insights are:
 Insight 3 acts as a control: it behaves like a real-world airline metric and shows the methodology is not simply detecting problems everywhere. 
 The other insights point to the same root cause: the synthetic data was generated with weak correlation between operational and financial fields.
 
-## Two corrections I kept
-
-I left two mistakes in the documentation because they show how the analysis was validated:
-- A false oversold-flight finding caused by comparing INTEGER values to TEXT values lexicographically.
-- A `DECIMAL(5,4)` overflow during load factor calculation because the precision was too small for ticket counts.
-
-Both were corrected by rerunning the analysis with explicit types and safer casts.
 
 ## How to run
 
